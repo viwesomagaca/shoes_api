@@ -70,14 +70,13 @@ module.exports = function(shoes) {
         if (err) {
           return done(err)
         }
-
-      })
-      window.location.reload();
-    }
+        res.send(result.brand + ' is saved')
+    })
+  };
 
 
 const displayInstock = function(req, res, done) {
-  var stock = req.body
+  var stock = req.body;
 
   shoeApiModel.create({
     color: stock.color,
@@ -89,10 +88,8 @@ const displayInstock = function(req, res, done) {
     if (err) {
       return done(err)
     }
-    res.send(result.brand + ' is saved')
+    res.send(result)
   })
-window.location.reload();
-
 }
 
 return {
@@ -103,5 +100,4 @@ return {
   shoeBrandSize,
   stockUpdate
 }
-window.location.reload();
 }
