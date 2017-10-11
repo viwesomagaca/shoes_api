@@ -36,9 +36,7 @@ app.use(function(req, res, next){
 
 
 app.get("/",function(req,res,done){
-  
 
-})
 app.get("/api/shoes", shoeapiroutes.index)
 app.get("/api/shoes/brand/:brandname", shoeapiroutes.brandname)
 app.get("/api/shoes/size/:size", shoeapiroutes.brandsize);
@@ -46,6 +44,7 @@ app.get("/api/shoes/brand/:brandname/size/:size", shoeapiroutes.shoeBrandSize)
 app.post("/api/shoes/sold/:id", shoeapiroutes.stockUpdate)
 app.post("/api/shoes", shoeapiroutes.displayInstock)
 
+})
 
 let portNumber =process.env.PORT || 3006;
 app.listen(portNumber, function(){
