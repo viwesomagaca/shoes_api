@@ -1,0 +1,91 @@
+table, th, tr, td{
+    border: solid gray 2px;
+    border-collapse: collapse;
+    background-color:darkgray;
+    align-content: center;
+    font-family: cursive;
+
+}
+/*.dropDisplay{
+  background-color: beige;
+}*/
+
+td{
+     align-content: center;
+     font-family: cursive;
+     background-color:Lightgray;
+}
+h1{
+    font-family:"Dancing Script", cursive;
+    font-size: 50px;
+}
+
+/*.addStock{
+  background-color: pink;
+  margin-left: 50%;
+  position: absolute;
+  top: 8em;
+  align-content: center;
+}*/
+
+h3{
+    font-family: "Kaushan Script", cursive;
+    font-size: 20px;
+    position: relative;
+
+}
+.row{
+  margin-left: 3em;
+}
+
+body{
+
+}
+
+#addStock{
+  margin-left: 4em;
+    background-color: white;
+     align-self: center;
+     align-content: center;
+    /*background-color: lightblue;*/
+}
+.container{
+  /*background-color: lavender;*/
+  margin-right: 50%;
+}
+select, #enterstock,#searchbtn, #all{
+    width: 12em;
+    height: 3em;
+    font-size: 14px;
+    font-family: cursive;
+    float: none;
+}
+
+#enterstock{
+    position: relative;
+    bottom: -5px;
+}
+.col-sm-9{
+  margin-left: 7em;
+}
+
+img{
+    width: 15em;
+    height: 7em;
+    position relative;
+}
+
+input{
+  text-transform: capitalize;
+}
+/*label, input{
+    float: left;
+    position: relative;
+    left: 50px;
+}
+
+label{
+     float: left;
+    position: relative;
+    left :54px;
+}*/
