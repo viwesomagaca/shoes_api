@@ -36,7 +36,7 @@ app.use(function(req, res, next){
 
 
 app.get("/",function(req,res,done){
-    res.redirect("/api/shoes")
+  
 
 })
 app.get("/api/shoes", shoeapiroutes.index)
