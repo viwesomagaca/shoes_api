@@ -59,45 +59,65 @@ module.exports = function(shoes) {
     var id = req.params.id
 
     shoeApiModel.findOneAndUpdate({
-          _id: id
-        }, {
-        $inc: {
-          "in_stock" : -1
-        }
-      },{
-        upsert : false
-      }, function(err, result) {
-        if (err) {
-          return done(err)
-        }
-        res.send(result.brand + ' is saved')
+      _id: id
+    }, {
+      $inc: {
+        "in_stock": -1
+      }
+    }, {
+      upsert: false
+    }, function(err, result) {
+      if (err) {
+        return done(err)
+      }
+      if (result.in_stock <= 1) {
+        result.remove();
+      }
+      res.send(result.brand + ' is saved')
     })
   };
 
 
-const displayInstock = function(req, res, done) {
-  var stock = req.body;
+  const displayInstock = function(req, res, done) {
+    var stock = req.body;
 
-  shoeApiModel.create({
-    color: stock.color,
-    brand: stock.brand,
-    price: stock.price,
-    size: stock.size,
-    in_stock: stock.in_stock
-  }, function(err, result) {
-    if (err) {
-      return done(err)
-    }
-    res.send(result)
-  })
-}
+    shoeApiModel.findOneAndUpdate({
+      color: stock.color,
+      brand: stock.brand,
+      price: stock.price,
+      size: stock.size,
+    }, {
+      $inc: {
+        in_stock: stock.in_stock
+      }
+    }, function(err, found) {
+      if (err) {
+        return done(err);
 
-return {
-  index,
-  displayInstock,
-  brandname,
-  brandsize,
-  shoeBrandSize,
-  stockUpdate
-}
+      } else
+      if (!found) {
+        shoeApiModel.create({
+          color: stock.color,
+          brand: stock.brand,
+          price: stock.price,
+          size: stock.size,
+          in_stock: stock.in_stock
+        }, function(err, found) {
+          if (err) {
+            return done(err)
+          }
+        })
+      }
+      res.send(found)
+    })
+  }
+
+  return {
+    index,
+    displayInstock,
+    brandname,
+    brandsize,
+    shoeBrandSize,
+    stockUpdate
+  }
 }
