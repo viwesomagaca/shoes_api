@@ -34,10 +34,6 @@ app.use(function(req, res, next){
   next();
 });
 
-// 
-// app.get("/",function(req,res,done){
-// })
-
 app.get("/api/shoes", shoeapiroutes.index)
 app.get("/api/shoes/brand/:brandname", shoeapiroutes.brandname)
 app.get("/api/shoes/size/:size", shoeapiroutes.brandsize);

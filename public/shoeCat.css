@@ -6,9 +6,7 @@ table, th, tr, td{
     font-family: cursive;
 
 }
-/*.dropDisplay{
-  background-color: beige;
-}*/
+
 
 td{
      align-content: center;
@@ -19,14 +17,6 @@ h1{
     font-family:"Dancing Script", cursive;
     font-size: 50px;
 }
-
-/*.addStock{
-  background-color: pink;
-  margin-left: 50%;
-  position: absolute;
-  top: 8em;
-  align-content: center;
-}*/
 
 h3{
     font-family: "Kaushan Script", cursive;
@@ -47,10 +37,8 @@ body{
     background-color: white;
      align-self: center;
      align-content: center;
-    /*background-color: lightblue;*/
 }
 .container{
-  /*background-color: lavender;*/
   margin-right: 50%;
 }
 select, #enterstock,#searchbtn, #all{
@@ -78,14 +66,3 @@ img{
 input{
   text-transform: capitalize;
 }
-/*label, input{
-    float: left;
-    position: relative;
-    left: 50px;
-}
-
-label{
-     float: left;
-    position: relative;
-    left :54px;
-}*/
