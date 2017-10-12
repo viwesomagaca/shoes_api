@@ -71,8 +71,8 @@ function brands(input) {
    }
 
 function shoesize(input) {
-      return brandFilter.value == input.brand;
-       return sizeFilter.value == input.size;
+      //  return sizeFilter.value == input.size;
+       return brandFilter.value == input.brand && sizeFilter.value == input.size;;
    }
 
   function brandsizes(input) {
@@ -121,24 +121,16 @@ function shoesize(input) {
       console.log(data);
        console.log(sizeFilter.value);
        console.log(brandFilter.value);
-      if (sizeFilter.value !== "")  {
-         if (brandFilter.value !== "" && sizeFilter.value !== "") {
-             var shoes = data.filter(shoesize);
-         } else {
+
+         if (brandFilter.value !=="" && sizeFilter.value !== ""){
              var shoes = data.filter(shoesize);
          }
-
          var searched = template({
               shoes : data
                   });
       document.getElementById("display").innerHTML = searched;
-     }
-
   })
-
-
 };
-
 
 function showAll(){
     var availableStock = document.getElementById('shoesCat').innerHTML;
@@ -149,16 +141,20 @@ function showAll(){
         url:"https://somagies-shoe-api.herokuapp.com/api/shoes",
         type: "GET"
     }).then(function(data){
+
         console.log(data);
         var searched = template({
              shoes : data
                  });
      document.getElementById("display").innerHTML = searched;
+
     })
 
+   $("select").val("0");
+   brandUnique();
+   UniqueSize();
 };
 
-// function purchaseShoe(){
 document.getElementById("display").addEventListener("click", function(e){
 
   var _id = e.target.id;
@@ -167,7 +163,6 @@ document.getElementById("display").addEventListener("click", function(e){
     type: "POST",
   }).then(function(data){
     search();
-    showAll();
     console.log('You just bought', data);
     var searched = template({
          shoes : data
@@ -178,7 +173,6 @@ document.getElementById("display").addEventListener("click", function(e){
   })
 })
 
-// function addingStock(){
 
   document.getElementById("enterstock").addEventListener("click",function(){
     var addBrand = document.querySelector(".brandAdd");
@@ -222,9 +216,9 @@ addIn_stock.value ="";
 
        sucess: function(data){
          alert("Stock has been added!")
-        //  showAll();
-        //  brandUnique();
-        //  UniqueSize();
+         showAll();
+         brandUnique();
+         UniqueSize();
          message.innerHTML = "Stock has been added!"
    }
 });

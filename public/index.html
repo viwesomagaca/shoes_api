@@ -25,15 +25,44 @@
     <h3>Repeat after me.."Shoes are Boring, I need sneakers"</h3>
   </div>
 
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-    <li><a href="#addStock" data-toggle="tab">Add Stock</a></li>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add new Stock</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>Brand :</label> <input class="form-control col-lg-2 brandAdd"  placeholder="Enter brand Name">
+        <br>
+          <br>
 
-    </li>
-  </ul>
-  <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade active in" id="home">
-      <br>
+        <label>Color :</label> <input class="form-control col-lg-2 colorAdd"  placeholder="Enter Brand Color">
+        <br>
+          <br>
+
+        <label>Size:</label> <input class="form-control col-lg-2 sizeAdd"  placeholder="Enter Brand Size">
+        <br>
+          <br>
+
+        <label>Price :</label> <input class="form-control col-lg-2 priceAdd"  placeholder="Enter Brand Price">
+        <br>
+          <br>
+
+        <label>Quantity :</label> <input class="form-control col-lg-2 in_stockAdd"  placeholder="Enter Brand Quantity">
+        <br>
+        <br>
+
+      </div>
+      <div class="modal-footer">
+        <input id="enterstock" class="btn btn-primary" type="submit"  value="Add Stock">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
       <div class="col-sm-9">
     <script class="dropdown" type="text/x-handlebars-template">
@@ -80,7 +109,9 @@
             <select class="brands"></select>
             <select class="sizes"></select>
             <input type="button" id="all" value="Show all" onclick="showAll()">
-
+            <button align="right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Add new Stock
+        </button>
         <div id="display"></div>
         <hr>
 
@@ -90,29 +121,10 @@
     <div class="tab-pane fade" id="addStock">
       <div class="col-sm-9">
             <h3> Add More Stock</h3>
-    <form>
+    <form class="col-lg-6">
 
       <div class="message" ></div>
-            <label>Brand :</label> <input class="brandAdd"  placeholder="Enter brand Name">
-            <br>
-              <br>
 
-            <label>Color :</label> <input class="colorAdd"  placeholder="Enter Brand Color">
-            <br>
-              <br>
-
-            <label>Size:</label> <input class="sizeAdd"  placeholder="Enter Brand Size">
-            <br>
-              <br>
-
-            <label>Price :</label> <input class="priceAdd"  placeholder="Enter Brand Price">
-            <br>
-              <br>
-
-            <label>Quantity :</label> <input class="in_stockAdd"  placeholder="Enter Brand Quantity">
-            <br>
-            <br>
-            <input id="enterstock" class="btn btn-primary" type="submit"  value="Add Stock">
           </form>
           <div class="output"></div>
         </div>
