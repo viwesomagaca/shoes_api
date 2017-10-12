@@ -1,3 +1,16 @@
+var availableStock = document.getElementById('shoesCat').innerHTML;
+var template = Handlebars.compile(availableStock);
+$.ajax({
+    url:"https://somagies-shoe-api.herokuapp.com/api/shoes",
+    type: "GET"
+}).then(function(data){
+    console.log(data);
+    var searched = template({
+         shoes : data
+             });
+ document.getElementById("display").innerHTML = searched;
+})
+
 var ddowns = document.querySelector(".dropdown").innerHTML;
 var myTemplate = Handlebars.compile(ddowns);
 
@@ -43,9 +56,6 @@ function UniqueSize(){
 })
 }
 UniqueSize();
-
-
-
 
 $("select").change(search);
   function search(){
