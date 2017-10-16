@@ -1,225 +1,211 @@
 var availableStock = document.getElementById('shoesCat').innerHTML;
 var template = Handlebars.compile(availableStock);
+
+// This is a function that is used to view all the stock, works as a onload
 $.ajax({
-    url:"https://somagies-shoe-api.herokuapp.com/api/shoes",
-    type: "GET"
-}).then(function(data){
-    console.log(data);
-    var searched = template({
-         shoes : data
-             });
- document.getElementById("display").innerHTML = searched;
+  url: "https://somagies-shoe-api.herokuapp.com/api/shoes",
+  type: "GET"
+}).then(function(data) {
+  var searched = template({
+    shoes: data
+  });
+  document.getElementById("display").innerHTML = searched;
 })
+
+
 
 var ddowns = document.querySelector(".dropdown").innerHTML;
 var myTemplate = Handlebars.compile(ddowns);
 
 function brandUnique() {
+  //Populates the dropdown with brands available in stock
     $.ajax({
-        url:"https://somagies-shoe-api.herokuapp.com/api/shoes",
-        type: "GET"
-    }).then(function(data){
-
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes",
+    type: "GET"
+  }).then(function(data) {
+   //maps through data in the api and returns brands
     var uniqueT = [];
     var map = {};
 
-    for (var i=0; i < data.length; i++){
-        var brandN = data[i];
+    for (var i = 0; i < data.length; i++) {
+      var brandN = data[i];
 
-        if(map[brandN.brand] === undefined){
-          map[brandN.brand] = brandN.brand;
-           uniqueT.push(brandN.brand)
-        }
+      if (map[brandN.brand] === undefined) {
+        map[brandN.brand] = brandN.brand;
+        uniqueT.push(brandN.brand)
+      }
     }
-  document.querySelector(".brands").innerHTML = myTemplate({brand: uniqueT});
-})
+    document.querySelector(".brands").innerHTML = myTemplate({
+      brand: uniqueT
+    });
+  })
 }
 brandUnique();
 
-function UniqueSize(){
-    var uniSize = [];
-    var mapSize = {};
 
-    $.ajax({
-        url:"https://somagies-shoe-api.herokuapp.com/api/shoes",
-        type: "GET"
-    }).then(function(data){
 
-    for(var i=0; i < data.length; i++){
-        var shoeSize = data[i];
-        if(mapSize[shoeSize.size] === undefined){
-            mapSize[shoeSize.size] = shoeSize.size;
-            uniSize.push(shoeSize.size);
-        }
+function UniqueSize() {
+  //Populates the dropdown with sizes available in stock
+  var uniSize = [];
+  var mapSize = {};
+
+  $.ajax({
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes",
+    type: "GET"
+  }).then(function(data) {
+
+    for (var i = 0; i < data.length; i++) {
+      var shoeSize = data[i];
+      if (mapSize[shoeSize.size] === undefined) {
+        mapSize[shoeSize.size] = shoeSize.size;
+        uniSize.push(shoeSize.size);
+      }
     }
-    document.querySelector(".sizes").innerHTML = myTemplate({size:uniSize});
-})
+    document.querySelector(".sizes").innerHTML = myTemplate({
+      size: uniSize
+    });
+  })
 }
 UniqueSize();
 
+
+
 $("select").change(search);
-  function search(){
-var brandFilter = document.querySelector(".brands");
-var colorFilter = document.querySelector(".colors");
-var sizeFilter = document.querySelector(".sizes")
 
-var availableStock = document.getElementById('shoesCat').innerHTML;
-var template = Handlebars.compile(availableStock);
+function search() {
+   //searches according to the dropdowns
+  var brandFilter = document.querySelector(".brands");
+  var sizeFilter = document.querySelector(".sizes");
+  var availableStock = document.getElementById('shoesCat').innerHTML;
+  var template = Handlebars.compile(availableStock);
+   //filters for brands
+  $.ajax({
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes/brand/" + brandFilter.value,
+    type: "GET"
+  }).then(function(data) {
+    var searched = template({
+      shoes: data
+    });
+    document.getElementById("display").innerHTML = searched;
+  })
 
-function brands(input) {
-       return brandFilter.value == input.brand;
-   }
+    //filters for sizes
+  $.ajax({
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes/size/" + sizeFilter.value,
+    type: "GET"
+  }).then(function(data) {
+    var searched = template({
+      shoes: data
+    });
+    document.getElementById("display").innerHTML = searched;
+  })
 
-function shoesize(input) {
-      //  return sizeFilter.value == input.size;
-       return brandFilter.value == input.brand && sizeFilter.value == input.size;;
-   }
+  //filters for brands and sizes
+  $.ajax({
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes/brand" + brandFilter.value + "/size/" + sizeFilter.value,
+    type: "GET"
+  }).then(function(data) {
 
-  function brandsizes(input) {
-       return sizeFilter.value == input.size;
-   }
-
-     $.ajax({
-         url:"https://somagies-shoe-api.herokuapp.com/api/shoes/brand/"+brandFilter.value,
-         type: "GET"
-     }).then(function(data){
-       console.log(data);
-       console.log(brandFilter.value);
-       if(brandFilter.value !== ""){
-         var shoes = data.filter(brands);
-
-           var searched = template({
-                shoes : data
-                    });
-        document.getElementById("display").innerHTML = searched;
-           //console.log(data);
-}
- })
-
-    $.ajax({
-        url:"https://somagies-shoe-api.herokuapp.com/api/shoes/size/"+sizeFilter.value,
-        type: "GET"
-    }).then(function(data){
-      console.log(data);
-       console.log(sizeFilter.value);
-      if(sizeFilter.value !== ""){
-          var shoes = data.filter(brandsizes);
-
-          var searched = template({
-               shoes : data
-                   });
-       document.getElementById("display").innerHTML = searched;
-
-
-     }
-})
-
-    $.ajax({
-      url:"https://somagies-shoe-api.herokuapp.com/api/shoes/brand/"+brandFilter.value+"/size/"+sizeFilter.value,
-      type: "GET"
-    }).then(function(data){
-      console.log(data);
-       console.log(sizeFilter.value);
-       console.log(brandFilter.value);
-
-         if (brandFilter.value !=="" && sizeFilter.value !== ""){
-             var shoes = data.filter(shoesize);
-         }
-         var searched = template({
-              shoes : data
-                  });
-      document.getElementById("display").innerHTML = searched;
+    var searched = template({
+      shoes: data
+    });
+    document.getElementById("display").innerHTML = searched;
   })
 };
 
-function showAll(){
-    var availableStock = document.getElementById('shoesCat').innerHTML;
-    var template = Handlebars.compile(availableStock);
 
 
-    $.ajax({
-        url:"https://somagies-shoe-api.herokuapp.com/api/shoes",
-        type: "GET"
-    }).then(function(data){
+function showAll() {
+  var availableStock = document.getElementById('shoesCat').innerHTML;
+  var template = Handlebars.compile(availableStock);
 
-        console.log(data);
-        var searched = template({
-             shoes : data
-                 });
-     document.getElementById("display").innerHTML = searched;
 
-    })
+  $.ajax({
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes",
+    type: "GET"
+  }).then(function(data) {
 
-   $("select").val("0");
-   brandUnique();
-   UniqueSize();
+    console.log(data);
+    var searched = template({
+      shoes: data
+    });
+    document.getElementById("display").innerHTML = searched;
+
+  })
+
+  $("select").val("0");
+  brandUnique();
+  UniqueSize();
 };
 
-document.getElementById("display").addEventListener("click", function(e){
 
+
+document.getElementById("display").addEventListener("click", function(e) {
+   //purchase function
   var _id = e.target.id;
   $.ajax({
-    url:"https://somagies-shoe-api.herokuapp.com/api/shoes/sold/"+_id,
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes/sold/" + _id,
     type: "POST",
-  }).then(function(data){
+  }).then(function(data) {
     search();
     console.log('You just bought', data);
     var searched = template({
-         shoes : data
-             });
- document.getElementById("display").innerHTML = searched;
+      shoes: data
+    });
+    document.getElementById("display").innerHTML = searched;
 
 
   })
 })
 
 
-  document.getElementById("enterstock").addEventListener("click",function(){
-    var addBrand = document.querySelector(".brandAdd");
-    var addColor = document.querySelector(".colorAdd");
-    var addIn_stock = document.querySelector(".in_stockAdd");
-	  var addPrice = document.querySelector(".priceAdd");
-    var addSize = document.querySelector(".sizeAdd");
-    var message = document.querySelector(".message");
 
-    if(addBrand.value == null || addBrand.value.length == 0 &&
+document.getElementById("enterstock").addEventListener("click", function() {
+  //add stock function
+  var addBrand = document.querySelector(".brandAdd");
+  var addColor = document.querySelector(".colorAdd");
+  var addIn_stock = document.querySelector(".in_stockAdd");
+  var addPrice = document.querySelector(".priceAdd");
+  var addSize = document.querySelector(".sizeAdd");
+  var message = document.querySelector(".message");
+
+  if (addBrand.value == null || addBrand.value.length == 0 &&
     addColor.value == null || addColor.value.length == 0 &&
-  addIn_stock.value == null || addIn_stock.value.length == 0 &&
-addPrice.value == null || addPrice.value.length == 0 &&
-addSize.value == null || addSize.value.length == 0 ){
-  alert("Please ENTER stock!")
-  return;
-}
+    addIn_stock.value == null || addIn_stock.value.length == 0 &&
+    addPrice.value == null || addPrice.value.length == 0 &&
+    addSize.value == null || addSize.value.length == 0) {
+    document.getElementById("messages").innerHTML = "Please add stock!"
+    alert("Please ENTER stock!")
+    return;
+  }
 
-var data1 =({
-  color: addColor.value,
-  brand: addBrand.value,
-  price: addPrice.value,
-  size: addSize.value,
-  in_stock: addIn_stock.value
-});
+  var data1 = ({
+    color: addColor.value,
+    brand: addBrand.value,
+    price: addPrice.value,
+    size: addSize.value,
+    in_stock: addIn_stock.value
+  });
 
-console.log(data1)
+  console.log(data1)
 
-addColor.value ="";
-addBrand.value ="";
-addPrice.value ="";
-addSize.value ="";
-addIn_stock.value ="";
+  addColor.value = "";
+  addBrand.value = "";
+  addPrice.value = "";
+  addSize.value = "";
+  addIn_stock.value = "";
 
-     $.ajax({
-         url:"https://somagies-shoe-api.herokuapp.com/api/shoes",
-         type: "POST",
-         async : "true",
-         dataType: "application/json",
-         data : data1,
+  $.ajax({
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes",
+    type: "POST",
+    async: "true",
+    dataType: "application/json",
+    data: data1,
 
-       sucess: function(data){
-         alert("Stock has been added!")
-         showAll();
-         brandUnique();
-         UniqueSize();
-         message.innerHTML = "Stock has been added!"
-   }
-});
+    sucess: function(data) {
+      alert("Stock has been added!")
+      brandUnique();
+      UniqueSize();
+    }
+  });
 });
