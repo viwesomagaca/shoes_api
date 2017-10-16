@@ -75,10 +75,16 @@ $("select").change(search);
 function search() {
    //searches according to the dropdowns
   var brandFilter = document.querySelector(".brands");
-  var sizeFilter = document.querySelector(".sizes");
+
+  var sizeFilter = document.querySelector(".sizes")
+
   var availableStock = document.getElementById('shoesCat').innerHTML;
   var template = Handlebars.compile(availableStock);
+  var message  = "We dont have stock for " + brandFilter.value
+  + " size " + sizeFilter.value;
    //filters for brands
+
+
   $.ajax({
     url: "https://somagies-shoe-api.herokuapp.com/api/shoes/brand/" + brandFilter.value,
     type: "GET"
@@ -102,17 +108,22 @@ function search() {
 
   //filters for brands and sizes
   $.ajax({
-    url: "https://somagies-shoe-api.herokuapp.com/api/shoes/brand" + brandFilter.value + "/size/" + sizeFilter.value,
+    url: "https://somagies-shoe-api.herokuapp.com/api/shoes/brand/" + brandFilter.value + "/size/" + sizeFilter.value,
     type: "GET"
   }).then(function(data) {
-
     var searched = template({
-      shoes: data
+      shoes : data
     });
-    document.getElementById("display").innerHTML = searched;
-  })
-};
-
+    console.log(data);
+    if (data.length >0) {
+      document.getElementById("display").innerHTML = searched;
+    }
+    if (data.length <= 0) {
+      document.getElementById("display").innerHTML = message;
+      console.log(message);
+    }
+    })
+    };
 
 
 function showAll() {
