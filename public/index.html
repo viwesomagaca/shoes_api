@@ -58,7 +58,7 @@
       </div>
       <div class="modal-footer">
         <input id="enterstock" class="btn btn-primary" type="submit"  value="Add Stock">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="window.location,reload()" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -99,7 +99,7 @@
                     <td>{{size}}</td>
                     <td>R {{price}}</td>
                     <td>{{in_stock}} </td>
-                    <td> <input type="button" id={{_id}} value="Buy" ></td>
+                    <td> <input type="button" id={{_id}} value="Purchase" ></td>
                 </tr>
                 {{/each}}
             </table>

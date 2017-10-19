@@ -115,7 +115,7 @@ function search() {
       shoes : data
     });
     console.log(data);
-    if (data.length >0) {
+    if (data.length > 0) {
       document.getElementById("display").innerHTML = searched;
     }
     if (data.length <= 0) {
@@ -143,10 +143,9 @@ function showAll() {
     document.getElementById("display").innerHTML = searched;
 
   })
-
-  $("select").val("0");
   brandUnique();
   UniqueSize();
+  $("select").val("0");
 };
 
 
@@ -158,11 +157,12 @@ document.getElementById("display").addEventListener("click", function(e) {
     url: "https://somagies-shoe-api.herokuapp.com/api/shoes/sold/" + _id,
     type: "POST",
   }).then(function(data) {
-    search();
     console.log('You just bought', data);
     var searched = template({
       shoes: data
     });
+    search();
+    showAll()
     document.getElementById("display").innerHTML = searched;
 
 
@@ -214,9 +214,11 @@ document.getElementById("enterstock").addEventListener("click", function() {
     data: data1,
 
     sucess: function(data) {
-      alert("Stock has been added!")
       brandUnique();
       UniqueSize();
+      showAll();
+      alert("Stock has been added!")
     }
   });
+  showAll();
 });
